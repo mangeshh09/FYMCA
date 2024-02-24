@@ -78,9 +78,9 @@ int main()
 
  do
  {
-  cout<<"\n\n1Insert\n2.Display\n3Search\n4.Purchase Book\n5.Modify\n6.Number of Sucessful Transaction\n7.Exit"<<"\n";
+  cout<<"\n\n1.Insert\n2.Display\n3Search\n4.Purchase Book\n5.Modify\n6.Number of Sucessful Transaction\n7.Exit"<<"\n";
   
-  cout<<"Enter your choice";
+  cout<<"Enter your choice = ";
   cin>>ch;
   
   switch(ch)
@@ -110,7 +110,7 @@ int main()
    		}
    		if(i==n)
    		{
-   		 cout<<"\nThis Book is notin Stock.";
+   		 cout<<"\nThis Book is not in Stock.";
    		}
    		break;
    case 4:
