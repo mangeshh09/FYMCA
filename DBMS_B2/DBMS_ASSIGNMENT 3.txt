@@ -1,0 +1,232 @@
+CREATE TABLE Sailor (
+    sid INTEGER,
+    sname VARCHAR(20),
+    rating INTEGER,
+    age REAL);
+INSERT INTO sailor VALUES(22, 'Dustin', 7, 45.0);
+INSERT INTO sailor VALUES(29,'Brutus' ,1, 33.0);
+INSERT INTO sailor VALUES(31, 'Lubber' ,8, 55.5);
+INSERT INTO sailor VALUES(32, 'Andy' ,8 ,25.5);
+INSERT INTO sailor VALUES(58 ,'Rusty' ,10, 35.0);
+INSERT INTO sailor VALUES(64 ,'Horatio', 7, 35.0);
+INSERT INTO sailor VALUES(71 ,'Zorba ',10, 16.0);
+INSERT INTO sailor VALUES(74 ,'Horatio', 9, 35.0);
+INSERT INTO sailor VALUES(85 ,'Art' ,3 ,25.5);
+INSERT INTO sailor VALUES(95 ,'Bob', 3, 63.5);
+
+select * from sailor;
+
+CREATE TABLE Boat (
+bid INTEGER,
+ bname VARCHAR(20),
+color VARCHAR(20)
+);
+
+INSERT INTO Boat VALUES (104, 'Marine', 'red');
+INSERT INTO Boat VALUES (101, 'Interlake', 'blue');
+INSERT INTO Boat VALUES (102, 'Interlake', 'red');
+INSERT INTO Boat VALUES (103, 'Clipper' ,'green');
+select * from Boat;
+
+
+
+CREATE TABLE Reserves (
+    sid INTEGER,
+    bid INTEGER,
+    day DATE
+);
+
+INSERT INTO Reserves VALUES(22, 101, '10/10/98');
+INSERT INTO Reserves VALUES(22 ,102 ,'10/10/98');
+INSERT INTO Reserves VALUES(22 ,103 ,'10/8/98');
+INSERT INTO Reserves VALUES(22 ,104 ,'10/7/98');
+INSERT INTO Reserves VALUES(31 ,102 ,'11/10/98');
+INSERT INTO Reserves VALUES(31 ,103 ,'11/6/98');
+INSERT INTO Reserves VALUES(31 ,104 ,'12/12/98');
+INSERT INTO Reserves VALUES(64 ,101 ,'9/5/98');
+INSERT INTO Reserves VALUES(64 ,102 ,'9/8/98');
+INSERT INTO Reserves VALUES(74 ,103 ,'9/8/98');
+
+select * from Reserves ;
+
+Q2. Find the name and age of all sailors 
+
+SELECT sname, age
+FROM Sailor;
+
+Q3. Find all sailors with a rating above 7
+SELECT *
+FROM Sailor
+WHERE rating > 7;
+
+Q4. Increase ratings of sailors by 10% whose age is less than 40
+UPDATE Sailor
+SET rating = rating * 1.1
+WHERE age < 40;
+select * from Sailor;
+
+
+Q5. Update rating of all sailors by 2 who have reserved boat on 12/12/98
+select * from Reserves ;
+
+UPDATE Sailor
+SET rating = rating + 2
+WHERE sid IN (SELECT sid FROM Reserves WHERE day = '12/12/98');
+
+Q6. Delete sailors whose rating is less than 3 and age is above 60
+DELETE FROM Sailor
+WHERE rating <=3 AND age > 60;
+
+
+Q7. Delete names of sailors who have reserved boat 102
+
+select * from Reserves ;
+select * from Sailor;
+
+
+UPDATE Sailor
+SET sname = NULL
+WHERE sid IN (SELECT sid FROM Reserves WHERE bid = 102);
+
+
+B) Consider same database given in the Part A.
+
+Q1. Find name of sailors and display the names in upper case who have reserved boat with name‘Interlake’.
+
+select * from Boat;
+select * from Sailor;
+
+
+SELECT UPPER(Sailor.sname) AS UpperCaseName
+FROM Sailor
+JOIN Reserves ON Sailor.sid = Reserves.sid
+JOIN Boat ON Reserves.bid = Boat.bid
+WHERE Boat.bname = 'Interlake';
+
+
+Q2. Find the ratings of sailors whose name contain ‘us’ substring.
+select * from Sailor;
+SELECT rating
+FROM Sailor
+WHERE UPPER(sname) LIKE '%US%';
+
+Q3. Find the average age of sailors with a rating of 8.
+SELECT AVG(age) AS AverageAge
+FROM Sailor
+WHERE rating = 8;
+
+Q4. Count the number of sailors with rating greater than 5
+SELECT COUNT(*) AS SailorCount
+FROM Sailor
+WHERE rating > 5;
+
+
+Q5. Select date of reservation of boat with bid =101 reserved by sailor with sid =64 add 2 months in the date and display it.
+
+SELECT day AS ReservationDate,
+ ADD_MONTHS(day, 2) AS AddedTwoMonths
+FROM Reserves
+WHERE bid = 101 AND sid = 64;
+
+
+Q6. Find the months between date 12/02/2021 and system current date.
+SELECT MONTHS_BETWEEN(SYSDATE, TO_DATE('12/02/2021', 'MM/DD/YYYY')) AS MonthsDifference
+FROM dual;
+
+Q7. Find name of the boat with month of reservation of boat.
+SELECT
+Boat.bname AS BoatName,
+EXTRACT(MONTH FROM Reserves.day) AS ReservationMonth
+FROM Reserves
+JOIN Boat ON Reserves.bid = Boat.bid;
+
+Q8. Demonstrate use of following numeric functions with suitable examples
+ABS, SIGN, POWER, ROUND, MOD, FLOOR, CEIL and TRUNC.
+1. ABS - Absolute Value
+
+SELECT ABS(rating) AS AbsoluteRating
+FROM Sailor;
+
+2. SIGN - Sign Function
+SELECT SIGN(rating) AS SignRating
+FROM Sailor;
+
+3. POWER - Exponentiation
+SELECT POWER(rating, 2) AS PowerRating
+FROM Sailor;
+
+4. ROUND 
+SELECT ROUND(15.67, 1) AS rounded_value FROM dual;
+
+5. MOD 
+SELECT MOD(15, 4) AS modulo_result FROM dual;
+
+6. FLOOR 
+SELECT FLOOR(rating) AS FloorRating FROM Sailor;
+
+7. CEIL 
+SELECT CEIL(rating) AS CeilRating FROM Sailor;
+
+8. TRUNC 
+SELECT TRUNC(rating) AS TruncatedRating FROM Sailor;
+
+
+9. Find the square root of ages of all sailors.
+SELECT sname, SQRT(age) AS SquareRootOfAge
+FROM Sailor;
+
+
+10. Display dates of all boat reservations in the format e.g 19-Jun-2005
+SELECT TO_CHAR(day, 'DD-Mon-YYYY') AS FormattedReservationDate
+FROM Reserves;
+
+11. Find the min and max rating from Sailors.
+SELECT MIN(rating) AS MinRating, MAX(rating) AS MaxRating
+FROM Sailor;
+
+
+c) Consider same database given in the Part A. Use Arithmetic Operators,Logical Operators ,Comparison Operator and Special Operator.
+Q1. Find the names and ages of sailors whose name begins and ends with B and has at least three characters.
+
+SELECT * FROM Sailor;
+
+SELECT sname, age
+FROM Sailor
+WHERE UPPER(sname) LIKE 'B%B' AND LENGTH(sname) >= 3;
+
+Q2. Find the names and ages of sailors whose name begins with A or L.
+SELECT sname, age FROM Sailor WHERE sname LIKE 'A%' OR sname LIKE 'L%';
+
+Q3. Find the names of sailors whose rating is greater than 7 and age is between 33 to 45.
+SELECT sname, age FROM Sailor 
+WHERE rating > 7 AND age BETWEEN 33 AND 45;
+
+
+Q4. Find the names of sailors who have not reserved a boat on 10/10/98.
+SELECT s.sname, s.age
+FROM Sailor s
+WHERE NOT EXISTS (
+SELECT 1
+FROM Reserves r
+WHERE r.sid = s.sid AND r.day = TO_DATE('10/10/98', 'MM/DD/YY')
+);
+
+
+Q5. Find the names of sailors who have reserved boat 103. (use IN operator)
+SELECT sname, age
+FROM Sailor
+WHERE sid IN (SELECT sid FROM Reserves WHERE bid = 103);
+
+
+Q6. Find the names of sailors who have reserved boat number 103. (use EXISTS operator)
+SELECT sname, age
+FROM Sailor s
+WHERE EXISTS (
+SELECT 1
+FROM Reserves r
+WHERE r.sid = s.sid AND r.bid = 103
+);
+
+
+
+
