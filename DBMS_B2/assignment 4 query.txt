@@ -1,0 +1,122 @@
+Title: Implement Group By , Having Clause and Order by clause with suitable Example.
+Problem Statement:
+Create tables in ORACLE And implement group by , Having clause and order by
+clause.
+
+CREATE TABLE EMPLOYEEE(
+EMP_ID int,
+EMP_NAME varchar(30),
+EMP_DESIGNATION varchar(30),
+EMP_SALARY int,
+EMP_COUNTRY varchar(30),
+PRIMARY KEY(EMP_ID)
+);
+
+DESC EMPLOYEEE;
+SELECT * FROM EMPLOYEEE;
+
+INSERT INTO EMPLOYEEE(EMP_ID,EMP_NAME ,EMP_DESIGNATION ,EMP_SALARY ,EMP_COUNTRY) VALUES('101','Shashank','Web_Developer','31000','India');
+INSERT INTO EMPLOYEEE VALUES('102',' Om','Professor ','40000 ','Bhutan');
+INSERT INTO EMPLOYEEE VALUES('103',' Rahul',' Trainee ','25000 ','London');
+INSERT INTO EMPLOYEEE VALUES('104 ','Rakesh ','Sr.Engineer ','70000 ','India');
+INSERT INTO EMPLOYEEE VALUES('105 ','Amruta ','Software Engineer ','40000 ','America');
+INSERT INTO EMPLOYEEE VALUES('106 ','Sanika ','Developer ','35000 ','Bhutan');
+INSERT INTO EMPLOYEEE VALUES('107 ','Mahesh ','Trainee ','21000 ','London');
+INSERT INTO EMPLOYEEE VALUES('108 ','Geeta ','Teacher ','20000 ','America');
+INSERT INTO EMPLOYEEE VALUES('109 ','Samarth ','Lawyer ','85000 ','India');
+
+
+CREATE TABLE PRODUCTS(
+PRODUCT_ID INT,
+PRODUCT_NAME VARCHAR(30),
+PRODUCT_CATEGORYID INT,
+PRODUCT_PRICE INT,
+PRIMARY KEY(PRODUCT_ID)
+);
+
+DESC PRODUCTS;
+
+INSERT INTO PRODUCTS(PRODUCT_ID ,PRODUCT_NAME ,PRODUCT_CATEGORYID ,PRODUCT_PRICE) VALUES('101 ','Dolo ','202 ','100');
+INSERT INTO PRODUCTS VALUES('104 ','Dolo ','301 ','20');
+INSERT INTO PRODUCTS VALUES('103 ','MeftalFort ','500 ','50');
+INSERT INTO PRODUCTS VALUES('106 ','Lecope-AD ','655 ','40');
+INSERT INTO PRODUCTS VALUES('105 ','Ketrol-DT ','453 ','90');
+INSERT INTO PRODUCTS VALUES('108 ','Enzoflame ','678 ','22');
+INSERT INTO PRODUCTS VALUES('109 ','Dolo ','301 ','10');
+INSERT INTO PRODUCTS VALUES('108 ','Lecope-AD ','101 ','36');
+
+SELECT * FROM PRODUCTS;
+
+
+A) PART : FROM PRODUCTS TABLE :
+Q1.From product table - Using order by Keyword Sort the products by price. 
+SELECT * FROM PRODUCTS ORDER BY PRODUCT_PRICE ASC;
+
+Q2. Sort the products by PRODUCT_price in reverse order:
+SELECT * FROM PRODUCTS ORDER BY PRODUCT_PRICE DESC;
+
+Q3. Sort the products from highest to lowest price
+SELECT * FROM PRODUCTS ORDER BY PRODUCT_PRICE DESC;
+
+
+Q4. By Using group by clause Lists the number of products in each Product_name
+SELECT PRODUCT_NAME, COUNT(*) AS NUM_PRODUCTS 
+FROM PRODUCTS 
+GROUP BY PRODUCT_NAME;
+
+Q5. By using having clause lists the number of products in each product_name. Only include Product_name with more than 2 Products:
+SELECT PRODUCT_NAME, COUNT(*) AS NUM_PRODUCTS 
+FROM PRODUCTS 
+GROUP BY PRODUCT_NAME
+HAVING COUNT(*) > 2;
+
+
+PART : FROM EMPLOYEEE TABLE :
+
+Q1. From EMPLOYEE table - using order by keyword sort the Employees by Emp_salary.
+ascending order
+SELECT * FROM EMPLOYEEE
+ORDER BY EMP_SALARY ;
+
+descending order
+SELECT * FROM EMPLOYEEE
+ORDER BY EMP_SALARY DESC;
+
+Q2. Sort the Employees by EMP_salary
+SELECT * FROM EMPLOYEEE
+ORDER BY EMP_SALARY ;
+
+SELECT * FROM EMPLOYEEE
+ORDER BY EMP_SALARY DESC;
+
+
+Q3. Sort the Employees by EMP_salary in reverse order
+SELECT * FROM EMPLOYEEE
+ORDER BY EMP_SALARY DESC;
+
+
+
+Q4. By Using group by clause Lists the number of Employees in each EMP_name
+SELECT EMP_NAME, COUNT(*) AS EMPLOYEEE_COUNT
+FROM EMPLOYEEE
+GROUP BY EMP_NAME;
+
+
+Q5. By using having clause lists the number of Employees in each EMP_country. Only include EMP_Country with more than 2 Employees:
+SELECT EMP_COUNTRY , COUNT(*) AS EMPLOYEEE_COUNT
+FROM EMPLOYEEE
+GROUP BY EMP_COUNTRY 
+HAVING COUNT(*) > 2;
+
+
+
+
+
+
+
+
+
+
+
+
+
