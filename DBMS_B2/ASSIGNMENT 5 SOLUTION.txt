@@ -1,0 +1,136 @@
+CREATE TABLE SALESMAN(
+SALESMAN_ID NUMBER(5) PRIMARY KEY,
+NAME VARCHAR(30), 
+CITY VARCHAR(15),
+COMMISION DECIMAL(5,2)
+);
+
+desc SALESMAN;
+
+INSERT INTO SALESMAN VALUES(5001,'James Hoog','New York',0.15);
+INSERT INTO SALESMAN VALUES(5002,'Nail Knite','Paris',0.13);
+INSERT INTO SALESMAN VALUES(5005,'Pit Alex','London',0.11);
+INSERT INTO SALESMAN VALUES(5006,'Mc Lyon','Paris',0.14);
+INSERT INTO SALESMAN VALUES(5007,'Paul Adam','Rome',0.13);
+INSERT INTO SALESMAN VALUES(5003,'Lauson Hen','San Jose',0.12);
+select *from SALESMAN;
+
+CREATE TABLE CUSTOMER(
+CUSTOMER_ID NUMBER(5) PRIMARY KEY,
+CUST_NAME VARCHAR(30),
+CITY VARCHAR(15),
+GRADE NUMBER(3),
+SALESMAN_ID NUMBER(5),
+FOREIGN KEY(SALESMAN_ID) REFERENCES SALESMAN(SALESMAN_ID)
+);
+desc CUSTOMER;
+
+INSERT INTO CUSTOMER VALUES(3002,'Nick Rimando','New York',100,5001);
+INSERT INTO CUSTOMER VALUES(3007,' Brad Davis' ,'New York ',200 ,5001);
+INSERT INTO CUSTOMER VALUES(3005, 'Graham Zusi ',' California ',200 , 5002);
+INSERT INTO CUSTOMER VALUES(3008, 'Julian Green', 'London ',300 , 5002);
+INSERT INTO CUSTOMER VALUES(3004,'Fabian Johnson ',' Paris' , 300 , 5006);
+INSERT INTO CUSTOMER VALUES(3009,'Geoff Cameron' , 'Berlin' , 100 , 5003);
+INSERT INTO CUSTOMER VALUES(3003,'Jozy Altidor','Moscow',200,5007);
+INSERT INTO CUSTOMER VALUES(3001,'Brad Guzan', 'London','' ,5003);
+
+select * from CUSTOMER ;
+
+
+CREATE TABLE ORDERS (
+    ORDER_NO NUMBER(5,0) ,
+    PURCH_AMT DECIMAL(8,2),
+    ORD_DATE DATE,
+    CUSTOMER_ID NUMBER(5),
+    SALESMAN_ID NUMBER(5),
+    PRIMARY KEY (ORDER_NO, CUSTOMER_ID, SALESMAN_ID),
+    FOREIGN KEY (CUSTOMER_ID) REFERENCES CUSTOMER(CUSTOMER_ID),
+    FOREIGN KEY (SALESMAN_ID) REFERENCES SALESMAN(SALESMAN_ID)
+);
+
+desc ORDERS ;
+
+INSERT INTO ORDERS VALUES (70001, 150.5, Date'2012-10-05', 3005, 5002);
+INSERT INTO ORDERS VALUES (70009, 270.65, Date'2012-09-10', 3001, 5003);
+INSERT INTO ORDERS VALUES (70002, 65.26, Date'2012-10-05', 3002, 5001);
+INSERT INTO ORDERS VALUES (70004, 110.5, Date'2012-08-17', 3009, 5003);
+INSERT INTO ORDERS VALUES (70007, 948.5, Date'2012-09-10', 3005, 5002);
+INSERT INTO ORDERS VALUES (70005, 2400.6, Date'2012-07-27', 3007, 5001);
+INSERT INTO ORDERS  VALUES (70008, 5760, Date'2012-09-10', 3002, 5001);
+INSERT INTO ORDERS  VALUES (70010, 1983.43, Date'2012-10-10', 3004, 5006);
+INSERT INTO ORDERS  VALUES (70003, 2480.4, Date'2012-10-10', 3009, 5003);
+INSERT INTO ORDERS  VALUES (70012, 250.45, Date'2012-06-27', 3008, 5002);
+INSERT INTO ORDERS VALUES (70011, 75.29, Date'2012-08-17', 3003, 5007);
+INSERT INTO ORDERS VALUES (70013, 3045.6, DATE'2012-04-25', 3002, 5001);
+
+select *from ORDERS;
+
+Q1) Find the salesmen and customers with their name and cities, who belongs to the same city.
+Q2) Prepare a list for which salesman are working for which customer along with city and
+commissions earned by the salesman.
+Q3) Write a query to make a join on the tables salesman and orders in such a form that the same
+column of each table will appear once and only the relational rows will come.
+Q4) Prepare a list for the salesmen who works either for one or more customer or not yet join under
+any of the customers
+Q5) Prepare a list in ascending order for the salesmen who works either for one or more customer
+or not yet join under any of the customer
+
+
+create table employee(
+employee_name varchar(50) primary key,
+ street varchar(50), city varchar(20)
+);
+insert into employee values('MANGESH','PAVAN NAGAR','NASHIK');
+insert into employee values('DARSHAN','UTTAM NAGAR','MALEGOAN');
+insert into employee values('AKHIL','MAULI LAWNS','JADGOAN');
+insert into employee values('SACHIN','KHUTWAD NAGAR','BIHAR');
+
+SELECT * FROM employee;
+
+create table company(
+company_name varchar(50) primary key,
+city varchar(20)
+);
+
+insert into company values('Tata','mumbai');
+insert into company values('Reliances','mumbai');
+insert into company values('first bank corporation','pune');
+
+SELECT * FROM company;
+
+create table works(
+employee_name varchar(50),
+company_name varchar(50),
+salary integer,
+primary key(employee_name, company_name),
+foreign key(employee_name) references employee(employee_name),
+foreign key(company_name) references company(company_name)
+);
+
+insert into works values('MANGESH','Tata',18000);
+insert into works values('DARSHAN','Reliances',15000);
+insert into works values('AKHIL','first bank corporation',19000);
+insert into works values('SACHIN','Tata',11000);
+
+SELECT * FROM works ;
+
+
+create table manages(
+employee_name varchar(50), 
+manager_name varchar(50),
+primary key(employee_name),
+foreign key(employee_name) references employee(employee_name)
+);
+insert into manages values('MANGESH','aditya patil');
+insert into manages values('DARSHAN','mohit patil');
+insert into manages values('AKHIL','varun bhadane');
+
+SELECT * FROM manages;
+
+
+
+
+
+
+
+
