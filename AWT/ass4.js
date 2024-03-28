@@ -1,9 +1,15 @@
-//Design a simple API using Express.js
-const express=require('express');
-const app=express();
-app.get('/',(req,res)=>{
-    res.send("welcome to kkwagh");
+const express = require('express');
+const app = express();
+
+app.get('/', (req, res) => {
+    res.send("Welcome to MCA DEPARTMENT");
 });
-app.listen(4000,()=>{
-    console.log("listening to port 4000");
+
+app.post('/postdata', (req, res) => {
+    res.send("Received a POST request");
+});
+
+
+app.listen(4000, () => {
+    console.log("Listening to port 4000");
 });
