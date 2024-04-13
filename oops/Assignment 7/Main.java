@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.Scanner;
 
 class Player
 {
@@ -89,5 +90,6 @@ public class Main
         CricketPlayer p1=new CricketPlayer(cage,cname,ctype,runs);
         FootballPlayer p2=new FootballPlayer(fage,fname,ftype,fgoals);
         HockeyPlayer p3=new HockeyPlayer(hage,hname,htype,hgoals);
+        sc.close();
     }
 }
