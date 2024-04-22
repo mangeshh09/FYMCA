@@ -1,0 +1,64 @@
+ASSIGNMENT 6
+
+CREATE TABLE student (
+Rollno NUMBER,
+Name VARCHAR2(50),
+Percentage NUMBER
+);
+
+select * from student
+-- Insert some sample records
+INSERT INTO student (Rollno, Name, Percentage) VALUES (1, 'John',
+85);
+INSERT INTO student (Rollno, Name, Percentage) VALUES (2, 'Alice',
+75);
+INSERT INTO student (Rollno, Name, Percentage) VALUES (3, 'Bob',
+65);
+INSERT INTO student (Rollno, Name, Percentage) VALUES (4, 'Emma',
+55);
+INSERT INTO student (Rollno, Name, Percentage) VALUES (5,
+'Michael', 45);
+INSERT INTO student (Rollno, Name, Percentage) VALUES (6, 'Sophia',
+35);
+
+
+DECLARE
+v_rollno student.rollno%TYPE;
+v_name student.name%TYPE;
+v_percentage student.percentage%TYPE;
+v_grade VARCHAR2(10);
+
+BEGIN
+
+
+v_rollno := :roll_number;
+
+SELECT name, percentage INTO v_name, v_percentage
+FROM student
+WHERE Rollno = v_rollno;
+
+IF v_percentage >= 80 THEN
+v_grade := 'A+';
+ELSIF v_percentage >= 70 AND v_percentage < 80 THEN
+v_grade := 'A';
+ELSIF v_percentage >= 60 AND v_percentage < 70 THEN
+v_grade := 'B+';
+ELSIF v_percentage >= 50 AND v_percentage < 60 THEN
+v_grade := 'B';
+ELSIF v_percentage >= 40 AND v_percentage < 50 THEN
+v_grade := 'C';
+ELSE
+v_grade := 'Fail';
+END IF;
+
+DBMS_OUTPUT.PUT_LINE('Roll No: ' || v_rollno);
+DBMS_OUTPUT.PUT_LINE('Name: ' || v_name);
+DBMS_OUTPUT.PUT_LINE('Percentage: ' || v_percentage);
+DBMS_OUTPUT.PUT_LINE('Grade: ' || v_grade);
+EXCEPTION
+WHEN NO_DATA_FOUND THEN
+DBMS_OUTPUT.PUT_LINE('No student found with Roll No: ' ||
+v_rollno);
+WHEN OTHERS THEN
+DBMS_OUTPUT.PUT_LINE('An error occurred: ' || SQLERRM);
+END;
