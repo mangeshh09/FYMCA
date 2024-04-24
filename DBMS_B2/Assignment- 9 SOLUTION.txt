@@ -1,0 +1,66 @@
+Assignment- 9
+
+Assignment Title:-     Write an explicit cursor to
+ i) display employee name, address ,salary
+along with age category (young or old)
+ ii) display count of young and old employees
+
+
+CREATE TABLE Employee9 (
+    ID NUMBER PRIMARY KEY,
+    Name VARCHAR2(100),
+    Age NUMBER,
+    Address VARCHAR2(255),
+    Salary NUMBER
+);
+
+insert into Employee9 values(1,'MANGESH',24,'NASHIK',50000);
+insert into Employee9 values(2,'AKHIL',26,'JADGOAN',55000);
+insert into Employee9 values(3,'CHETAN',42,'SHIRPUR',45000);
+insert into Employee9 values(4,'SACHIN',48,'UTTARPRADESH',40000);
+insert into Employee9 values(5,'PRASHANT',17,'DUBAI',35000);
+
+DESC Employee9 
+
+select * from Employee9 
+
+DECLARE
+    emp_name Employee9.name%TYPE;
+    emp_address Employee9.address%TYPE;
+    emp_salary Employee9.salary%TYPE;
+    emp_age Employee9.age%TYPE;
+    
+    young_count NUMBER := 0;
+    old_count NUMBER := 0;
+    
+    CURSOR emp_employee9 IS
+        SELECT name, address, salary, age
+        FROM Employee9;
+BEGIN
+    OPEN emp_employee9;
+   
+    LOOP
+        FETCH emp_employee9 INTO emp_name, emp_address, emp_salary, emp_age;
+        EXIT WHEN emp_employee9%NOTFOUND;
+        
+        IF emp_age < 30 THEN
+            DBMS_OUTPUT.PUT_LINE(emp_name || ', ' || emp_address || ', ' || emp_salary || ', Young');
+            DBMS_OUTPUT.PUT_LINE('----------------------------------------------------------------');
+            young_count := young_count + 1;
+        ELSE
+            DBMS_OUTPUT.PUT_LINE(emp_name || ', ' || emp_address || ', ' || emp_salary || ', Old');
+            DBMS_OUTPUT.PUT_LINE('----------------------------------------------------------------');
+            old_count := old_count + 1;
+        END IF;
+    END LOOP;
+    
+    CLOSE emp_employee9;
+    
+    DBMS_OUTPUT.PUT_LINE('Young employees: ' || young_count);
+    DBMS_OUTPUT.PUT_LINE('Old employees: ' || old_count);
+    
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        DBMS_OUTPUT.PUT_LINE('No more data to fetch.');
+END;
+/
