@@ -1,0 +1,71 @@
+create table employees(employee_id int primary key,ename varchar(20),basic_salary number);
+
+
+insert into employees values(1,'Manasi',40000);
+insert into employees values(2,'Sayali',30000);
+insert into employees values(3,'Darshana',35000);
+insert into employees values(4,'Kajal',35000);
+insert into employees values(5,'Akshada',28000);
+
+
+select * from employees
+
+
+EMPLOYEE_ID	ENAME	      BASIC_SALARY
+1	      Manasi	40000
+2	      Sayali	30000
+3	      Darshana	35000
+4	      Kajal	      35000
+5	      Akshada	28000
+
+DECLARE
+basic_salary employees.basic_salary%TYPE;
+da NUMBER;
+hra NUMBER;
+pf NUMBER;
+gross_salary NUMBER;
+
+FUNCTION calculate_gross_salary(p_basic_salary NUMBER) RETURN NUMBER IS
+BEGIN
+da := p_basic_salary * 0.4; -- DA is 40% of basic
+hra := p_basic_salary * 0.2; -- HRA is 20% of basic
+pf := p_basic_salary * 0.12; -- PF deduction is 12% of basic salary
+gross_salary := p_basic_salary + da + hra - pf; -- Calculate gross salary
+
+RETURN gross_salary;
+END calculate_gross_salary;
+
+BEGIN
+-- Accept basic salary from the user through the employees table
+SELECT basic_salary INTO basic_salary
+FROM employees
+WHERE employee_id = :input_employee_id;
+
+-- Call the function to calculate gross salary
+gross_salary := calculate_gross_salary(basic_salary);
+
+-- Display the result
+DBMS_OUTPUT.PUT_LINE('Gross salary:' || gross_salary);
+EXCEPTION
+WHEN NO_DATA_FOUND THEN
+DBMS_OUTPUT.PUT_LINE('Employee not found.');
+END;
+
+
+:INPUT_EMPLOYEE_ID	
+5
+
+Gross salary:41440
+
+Statement processed.
+
+
+:INPUT_EMPLOYEE_ID	
+4
+
+Gross salary:51800
+
+Statement processed.
+
+
+
